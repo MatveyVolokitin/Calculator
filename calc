@@ -1,0 +1,129 @@
+import javax.naming.OperationNotSupportedException;
+class Main {
+
+    private String[] arab = {"10", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+    private String[] roman = {"X", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"};
+
+    public String calc(String inputString) throws Exception {
+        String[] arr = inputString.split(" ");
+        if (arr.length == 3) {
+            if (existInArabic(arr[0]) && existInArabic(arr[2])) {
+
+                int num1 = Integer.parseInt(arr[0]);
+                int num2 = Integer.parseInt(arr[2]);
+                return calculatorHelper(num1, num2, arr[1]);
+            } else if (existInRoman(arr[0]) && existInRoman(arr[2])) {
+
+                int num1 = romanToArabic(arr[0]);
+                int num2 = romanToArabic(arr[2]);
+                String temporaryResult = calculatorHelper(num1, num2, arr[1]);
+                int temporaryResult1 = Integer.parseInt(temporaryResult);
+
+                if (temporaryResult1 > 0) {
+                    return arabicToRoman(temporaryResult1);
+                } else throw new OperationNotSupportedException("Исключение");
+            }
+        } else throw new OperationNotSupportedException("Исключение");
+
+        throw new OperationNotSupportedException("Исключение");
+    }
+
+    public static String calculatorHelper(int a, int b, String s) throws Exception {
+        int result = switch (s) {
+            case "+" -> a + b;
+            case "-" -> a - b;
+            case "*" -> a * b;
+            case "/" -> a / b;
+            default -> throw new OperationNotSupportedException("Исключение");
+
+        };
+        String resultStr = String.valueOf(result);
+        return resultStr;
+    }
+
+    public boolean existInArabic(String a) {
+        for (String s : arab) {
+            if (a.equals(s)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean existInRoman(String a) {
+        for (String s : roman) {
+            if (a.equals(s)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public int romanToArabic(String a) {
+        int s = switch (a) {
+            case "X" -> 10;
+            case "I" -> 1;
+            case "II" -> 2;
+            case "III" -> 3;
+            case "IV" -> 4;
+            case "V" -> 5;
+            case "VI" -> 6;
+            case "VII" -> 7;
+            case "VIII" -> 8;
+            case "IX" -> 9;
+            default -> 0;
+        };
+        return s;
+    }
+    public String arabicToRoman(int a) {
+        String s = switch (a) {
+            case 10 -> "X";
+            case 1 -> "I";
+            case 2 -> "II";
+            case 3 -> "III";
+            case 4 -> "IV";
+            case 5 -> "V";
+            case 6 -> "VI";
+            case 7 -> "VII";
+            case 8 -> "VIII";
+            case 9 -> "IX";
+            case 11 -> "XI";
+            case 12 -> "XII";
+            case 13 -> "XIII";
+            case 14 -> "XIV";
+            case 15 -> "XV";
+            case 16 -> "XVI";
+            case 17 -> "XVII";
+            case 18 -> "XVIII";
+            case 19 -> "XIX";
+            case 20 -> "XX";
+            case 21 -> "XXI";
+            case 24 -> "XXIV";
+            case 25 -> "XXV";
+            case 27 -> "XXVII";
+            case 28 -> "XXVIII";
+            case 30 -> "XXX";
+            case 32 -> "XXXII";
+            case 35 -> "XXXV";
+            case 36 -> "XXXVI";
+            case 40 -> "XL";
+            case 42 -> "XLII";
+            case 45 -> "XLV";
+            case 48 -> "XLVIII";
+            case 49 -> "XLIX";
+            case 50 -> "L";
+            case 54 -> "LIV";
+            case 56 -> "LVI";
+            case 60 -> "LX";
+            case 63 -> "LXIII";
+            case 64 -> "LXIV";
+            case 70 -> "LXX";
+            case 72 -> "LXXII";
+            case 80 -> "LXXX";
+            case 81 -> "LXXXI";
+            case 90 -> "XC";
+            case 100 -> "C";
+            default -> "";
+        };
+        return s;
+    }
+}
